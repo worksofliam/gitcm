@@ -30,8 +30,8 @@ If (Error.Code = *BLANK);
     createdSourceFiles = getIFSFolders(baseRepoPath.Data);
 
     If (createdSourceFiles);
-      system('CRTDTAARA DTAARA(' + %TrimR(LIB) + '/GITREPODIR) TYPE(*CHAR) LEN(128) TEXT(''' + %trim(baseRepoPath.Data) + ''')');
-      system('CRTDTAARA DTAARA(' + %TrimR(LIB) + '/BRANCH) TYPE(*CHAR) LEN(50) TEXT(''' + %trim(NAME) + ''')');
+      system('CRTDTAARA DTAARA(' + %TrimR(LIB) + '/GITREPODIR) TYPE(*CHAR) LEN(128) VALUE(''' + %trim(baseRepoPath.Data) + ''')');
+      system('CRTDTAARA DTAARA(' + %TrimR(LIB) + '/BRANCH) TYPE(*CHAR) LEN(50) VALUE(''' + %trim(NAME) + ''')');
       showMessage('Branch library ' + %TrimR(LIB) + ' created successfully.');
     Else;
       // Revert!
