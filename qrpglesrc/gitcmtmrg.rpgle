@@ -8,11 +8,10 @@ Dcl-Pi GITCMTMRG;
   AUTHOR Char(30);
   EMAIL Char(50);
   AUTOMERGE Char(4); //*YES or *NO
+  SUBMITBRING Char(4); //*YES or *NO
 End-Pi;
 
-// TODO: allow LIB to be *CURLIB
 // TODO: auto update base library parameter thru sbmjob
-
 
 // ----------------------------------------------------------------------------
 
@@ -32,6 +31,7 @@ Dcl-s USERNAME Char(10) Inz(*USER);
 Dcl-S  Success Ind;
 Dcl-Ds Error LikeDS(Error_T);
 Dcl-DS baseRepoPath LikeDs(DSResult_T);
+Dcl-DS baseLibrary LikeDs(DSResult_T);
 Dcl-DS branchName LikeDs(DSResult_T);
 Dcl-S CmdStr  Varchar(256);
 
@@ -45,8 +45,6 @@ Dcl-S lObjectCount Int(5);
 Dcl-S lRepoPath Varchar(128);
 Dcl-S lDirName Varchar(10);
 Dcl-S lFileName Varchar(21);
-
-// TODO: pointer handlers
 
 Select;
   When (AUTHOR = '*JOB');
@@ -64,7 +62,7 @@ Select;
 Endsl;
 
 Select;
-  When (lEmail = '*JOB');
+  When (EMAIL = '*JOB');
     lPointer = getenv('GIT_EMAIL');
     If (lPointer <> *NULL);
       lEmail = %Str(lPointer);
@@ -203,10 +201,14 @@ If (Error.Code = *BLANK);
 
         // TODO: unlock repo
         If (Success);
-          // CLear branch lib and delete the data area.
+          // Clear branch lib and delete the data area.
           
           system('CHGLIB LIB(' + %Trim(LIB) + ') TEXT(''' + %Trim(branchName.Data) + ' (merged)'')');
           system('DLTOBJ OBJ(' + %Trim(LIB) + '/BRANCH) OBJTYPE(*DTAARA)');
+
+          If (SUBMITBRING = '*YES');
+            ExSr RunSubmitBring;
+          Endif;
         Else;
           // If it failed, delete the branch
           Utils_Qsh('cd ' + lRepoPath + ' && /QOpenSys/pkgs/bin/git branch -D ' + %Trim(branchName.Data));
@@ -229,6 +231,13 @@ Endif;
 system('RMVENVVAR ENVVAR(QIBM_QSH_CMD_OUTPUT)');
 
 Return;
+
+Begsr RunSubmitBring;
+  getDataArea(baseLibrary:128:'BASE      ' + LIB:-1:128:Error);
+  If (Error.Code = *Blank);
+    system('SBMJOB CMD(GITCM/GITBRG LIB(' + %Trim(baseLibrary.Data) + ')) JOB(GITBRING)');
+  Endif;
+Endsr;
 
 Begsr BringFilesBack;
   Obj_List(LIB:'*ALL':'*FILE');

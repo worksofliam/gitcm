@@ -31,6 +31,7 @@ If (Error.Code = *BLANK);
 
     If (createdSourceFiles);
       system('CRTDTAARA DTAARA(' + %TrimR(LIB) + '/GITREPODIR) TYPE(*CHAR) LEN(128) VALUE(''' + %trim(baseRepoPath.Data) + ''')');
+      system('CRTDTAARA DTAARA(' + %TrimR(LIB) + '/BASE) TYPE(*CHAR) LEN(10) VALUE(''' + %trim(BASE) + ''')');
       system('CRTDTAARA DTAARA(' + %TrimR(LIB) + '/BRANCH) TYPE(*CHAR) LEN(50) VALUE(''' + %trim(NAME) + ''')');
       Utils_Print('NOTICE: Branch library ' + %TrimR(LIB) + ' created successfully.');
     Else;
