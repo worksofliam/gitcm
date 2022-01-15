@@ -15,6 +15,15 @@ Dcl-Proc Utils_Lower Export;
   Return pValue;
 End-Proc;
 
+Dcl-Proc Utils_Print Export;
+  Dcl-Pi *N;
+    Text Varchar(512) Const;
+  End-Pi;
+
+  printf(%trim(Text) + x'25');
+  printf_jl(%trim(Text) + x'0d25');
+End-Proc;
+
 Dcl-Proc Utils_Qsh Export;
   Dcl-Pi *N Ind;
     Command Varchar(512) Const;

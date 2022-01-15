@@ -118,7 +118,7 @@ If (Error.Code = *BLANK);
                 lMemberCount = *HIVAL;
                 lObjectCount = *HIVAL;
 
-                printf('ERROR: Failed to copy ' + lDirName + '/' + lFileName + x'25');
+                Utils_Print('ERROR: Failed to copy ' + lDirName + '/' + lFileName + x'25');
               Endif;
             Endfor;
           Endif;
@@ -134,7 +134,7 @@ If (Error.Code = *BLANK);
               Success = Utils_Qsh('cd ' + lRepoPath + ' && /QOpenSys/pkgs/bin/git commit -m "' + %Trim(TEXT) + '" --author "' + lAuthor + ' <' + lEmail + '>" ');
   
               If (Success = *Off);
-                printf('ERROR: Failed to stage changes.');
+                Utils_Print('ERROR: Failed to stage changes.');
               Endif;
             Endif;
 
@@ -143,7 +143,7 @@ If (Error.Code = *BLANK);
               Success = Utils_Qsh('cd ' + lRepoPath + ' && /QOpenSys/pkgs/bin/git merge ' + BASE_BRANCH);
 
               If (Success = *Off);
-                printf('ERROR: Failed to merge ' + BASE_BRANCH + ' into ' + %Trim(branchName.Data) + '. Bringing conflict back to ' + %Trim(LIB));
+                Utils_Print('ERROR: Failed to merge ' + BASE_BRANCH + ' into ' + %Trim(branchName.Data) + '. Bringing conflict back to ' + %Trim(LIB));
 
                 Exsr BringFilesBack;
               Endif;
@@ -154,7 +154,7 @@ If (Error.Code = *BLANK);
               Success = Utils_Qsh('cd ' + lRepoPath + ' && /QOpenSys/pkgs/bin/git checkout ' + BASE_BRANCH);
               
               If (Success = *Off);
-                printf('ERROR: Failed to checkout to branch ' + BASE_BRANCH + '. Does it already exist?');
+                Utils_Print('ERROR: Failed to checkout to branch ' + BASE_BRANCH + '. Does it already exist?');
               Endif;
             Endif;
 
@@ -164,17 +164,17 @@ If (Error.Code = *BLANK);
                 Success = Utils_Qsh('cd ' + lRepoPath + ' && /QOpenSys/pkgs/bin/git merge ' + %Trim(branchName.Data));
 
                 If (Success);
-                  printf('NOTICE: Merged ' + %Trim(branchName.Data) + ' into ' + BASE_BRANCH + x'25');
+                  Utils_Print('NOTICE: Merged ' + %Trim(branchName.Data) + ' into ' + BASE_BRANCH + x'25');
                 Else;
-                  printf('ERROR: Failed to merge ' + %Trim(branchName.Data) + ' into ' + BASE_BRANCH + x'25');
+                  Utils_Print('ERROR: Failed to merge ' + %Trim(branchName.Data) + ' into ' + BASE_BRANCH + x'25');
                 Endif;
               Else;
-                printf('NOTICE: Created branch ' + %Trim(branchName.Data) + x'25');
+                Utils_Print('NOTICE: Created branch ' + %Trim(branchName.Data) + x'25');
               Endif;
             Endif;
           On-Error;
             Utils_Qsh('cd ' + lRepoPath + ' && /QOpenSys/pkgs/bin/git clean -f');
-            printf('ERROR: Failed to commit changes to the repository. Aborting');
+            Utils_Print('ERROR: Failed to commit changes to the repository. Aborting');
           Endmon;
 
         Else;
@@ -183,7 +183,7 @@ If (Error.Code = *BLANK);
         
           // Check out to the base branch
           Utils_Qsh('cd ' + lRepoPath + ' && /QOpenSys/pkgs/bin/git checkout ' + BASE_BRANCH);
-          printf('ERROR: Failed to migrate sources. Aborted.' + x'25');
+          Utils_Print('ERROR: Failed to migrate sources. Aborted.' + x'25');
         Endif;
 
         // Always Check out to the base branch
@@ -201,16 +201,16 @@ If (Error.Code = *BLANK);
         Endif;
 
       Else;
-        printf('ERROR: Failed to checkout branch ' + %Trim(branchName.Data) + x'25');
+        Utils_Print('ERROR: Failed to checkout branch ' + %Trim(branchName.Data) + x'25');
       Endif;
     Else;
-      printf('ERROR: Unable to find git directory.' + x'25');
+      Utils_Print('ERROR: Unable to find git directory.' + x'25');
     Endif;
   Else;
-    printf('ERROR: Failed to get branch name. Missing BRANCH data area.' + x'25');
+    Utils_Print('ERROR: Failed to get branch name. Missing BRANCH data area.' + x'25');
   Endif;
 Else;
-  printf('ERROR: Failed to get base repo path. Missing GITREPODIR data area.' + x'25');
+  Utils_Print('ERROR: Failed to get base repo path. Missing GITREPODIR data area.' + x'25');
   // TODO: error handling
 Endif;
 

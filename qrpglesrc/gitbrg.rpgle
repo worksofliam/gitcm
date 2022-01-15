@@ -30,12 +30,10 @@ If (Error.Code = *BLANK);
   If (getSources(baseRepoPath.Data:DIR:NAME));
     // All good
   Else;
-    printf('ERROR: Could not get sources.');
-    // Error!
+    Utils_Print('ERROR: Could not get sources.');
   Endif;
 Else;
-  Dsply 'No data area';
-  printf('ERROR: GITREPODIR data area not found.');
+  Utils_Print('ERROR: GITREPODIR data area not found.');
 Endif;
 
 Return;

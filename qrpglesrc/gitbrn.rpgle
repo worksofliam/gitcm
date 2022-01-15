@@ -1,13 +1,11 @@
 **FREE
 
-Ctl-Opt DFTACTGRP(*NO);
+Ctl-Opt DFTACTGRP(*NO) BNDDIR('GITCM/GITCM');
 
 // -----------------------------------------------------------------------------
 
-Dcl-PR system Int(10) extproc('system');
-  *N Pointer value options(*string);
-End-PR;
-
+/copy 'qrpgleref/system.rpgle'
+/copy 'qrpgleref/utils.rpgle'
 /copy 'qrpgleref/dataarea.rpgle'
 
 // -----------------------------------------------------------------------------
@@ -34,19 +32,19 @@ If (Error.Code = *BLANK);
     If (createdSourceFiles);
       system('CRTDTAARA DTAARA(' + %TrimR(LIB) + '/GITREPODIR) TYPE(*CHAR) LEN(128) VALUE(''' + %trim(baseRepoPath.Data) + ''')');
       system('CRTDTAARA DTAARA(' + %TrimR(LIB) + '/BRANCH) TYPE(*CHAR) LEN(50) VALUE(''' + %trim(NAME) + ''')');
-      showMessage('Branch library ' + %TrimR(LIB) + ' created successfully.');
+      Utils_Print('NOTICE: Branch library ' + %TrimR(LIB) + ' created successfully.');
     Else;
       // Revert!
       system('CLRLIB ' + %TrimR(LIB));
       system('DLTLIB ' + %TrimR(LIB));
-      showMessage('Error creating branch library.');
+      Utils_Print('ERROR: Error creating branch source files.');
     Endif;
   Else;
-    showMessage('Unable to create branch library ' + %TrimR(LIB) + '.');
+    Utils_Print('ERROR: Unable to create branch library ' + %TrimR(LIB) + '.');
   Endif;
 
 Else;
-  showMessage('Unable to locate GITREPODIR in ' + %TrimR(BASE) + '.');
+  Utils_Print('ERROR: Unable to locate GITREPODIR in ' + %TrimR(BASE) + '.');
 Endif;
 
 Return;
@@ -136,30 +134,3 @@ Dcl-Proc getIFSFolders;
 
   Return success;
 End-Proc;
-
-// **************
-
-Dcl-Proc showMessage;
-  Dcl-Pi showMessage;
-    Text Varchar(8192) Const;
-  END-PI;
-
-  Dcl-DS ErrCode;
-    BytesIn  Int(10) Inz(0);
-    BytesOut Int(10) Inz(0);
-  END-DS;
-
-  Dcl-PR QUILNGTX ExtPgm('QUILNGTX');
-    MsgText     Char(8192)    Const;
-    MsgLength   Int(10)       Const;
-    MessageId   Char(7)       Const;
-    MessageFile Char(21)      Const;
-    dsErrCode   Like(ErrCode);
-  END-PR;
-
-  QUILNGTX(Text:%Len(Text):
-              '':'':
-              ErrCode);
-
-  Return;
-END-PROC;
