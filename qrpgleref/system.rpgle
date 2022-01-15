@@ -1,6 +1,6 @@
 **FREE
 
-Dcl-PR printf Int(10) extproc('printf');
+Dcl-PR printf Int(10) extproc('Qp0zLprintf');
   format Pointer value options(*string);
 End-PR;
 

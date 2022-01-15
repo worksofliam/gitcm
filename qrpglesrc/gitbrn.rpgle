@@ -18,6 +18,8 @@ Dcl-Pi GITBRN;
   NAME Char(50); //Name of the branch
 End-Pi;
 
+// TODO: option to set LIB to CURLIB when done
+
 Dcl-Ds Error LikeDS(Error_T);
 
 Dcl-DS baseRepoPath LikeDs(DSResult_T);

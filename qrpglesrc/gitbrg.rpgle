@@ -16,6 +16,8 @@ Dcl-Pi GITBRG;
   NAME Char(10); // Accepts *ALL or a name
 End-Pi;
 
+// TODO: allow LIB to be *CURLIB
+
 Dcl-Ds Error LikeDS(Error_T);
 
 Dcl-DS baseRepoPath LikeDs(DSResult_T);
