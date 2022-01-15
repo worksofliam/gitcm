@@ -11,8 +11,6 @@ Dcl-Pi GITCMTMRG;
   SUBMITBRING Char(4); //*YES or *NO
 End-Pi;
 
-// TODO: auto update base library parameter thru sbmjob
-
 // ----------------------------------------------------------------------------
 
 /copy 'qrpgleref/utils.rpgle'
@@ -39,6 +37,7 @@ Dcl-S lPointer Pointer;
 Dcl-S lAuthor Varchar(30);
 Dcl-S lEmail Varchar(50);
 
+Dcl-S lMemberTotal Int(5);
 Dcl-S lMemberCount Int(5);
 Dcl-S lObjectCount Int(5);
 
@@ -109,7 +108,8 @@ If (Error.Code = *BLANK);
             // Attempt to create the directory incase it is new
             system('MKDIR DIR(''./' + lDirName + ''')');
 
-            For lMemberCount = 1 to Mbrs_List(LIB:Object);
+            lMemberTotal = Mbrs_List(LIB:Object);
+            For lMemberCount = 1 to lMemberTotal;
               ListDS = Mbrs_Next();
               lFileName = %Trim(Utils_Lower(LmMember)) + '.' + %Trim(Utils_Lower(LmType));
 
@@ -248,7 +248,8 @@ Begsr BringFilesBack;
     If (OBJATR = 'PF');
       lDirName = %Trim(Utils_Lower(Object));
 
-      For lMemberCount = 1 to Mbrs_List(LIB:Object);
+      lMemberTotal = Mbrs_List(LIB:Object);
+      For lMemberCount = 1 to lMemberTotal;
         ListDS = Mbrs_Next();
         lFileName = %Trim(Utils_Lower(LmMember)) + '.' + %Trim(Utils_Lower(LmType));
 

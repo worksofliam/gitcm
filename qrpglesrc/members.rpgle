@@ -1,6 +1,7 @@
 
      h NoMain
 
+      /COPY 'qrpgleref/system.rpgle'
       /COPY 'qrpgleref/members.rpgle'
 
      d PgmInfo        SDS
@@ -186,6 +187,10 @@
       ** $QUSCRTUS - API to create user space
       **========================================================================
      c     $QUSCRTUS     begsr
+      **
+      ** Delete old space
+      **
+             system('DLTOBJ OBJ(QTEMP/MEMBERS) OBJTYPE(*USRSPC)');
       **
       ** Create a user space named ListMember in QTEMP.
       **

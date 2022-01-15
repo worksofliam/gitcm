@@ -98,6 +98,7 @@
 
        // -----------------------
 
+      /COPY 'qrpgleref/system.rpgle'
       /COPY 'qrpgleref/objects.rpgle'
 
      P Obj_List        B                   Export
@@ -130,6 +131,8 @@
           // $QUSCRTUS - create userspace
           //--------------------------------------------------------
           begsr $QUSCRTUS;
+
+             system('DLTOBJ OBJ(QTEMP/LISTOUTQS) OBJTYPE(*USRSPC)');
 
              BytesPrv = 116;
              Spacename = 'LISTOUTQS';
