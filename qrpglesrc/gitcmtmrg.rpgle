@@ -12,7 +12,6 @@ End-Pi;
 
 // TODO: allow LIB to be *CURLIB
 // TODO: auto update base library parameter thru sbmjob
-// TODO: auto push. automerge must be *no and remote origin has to be setup
 
 
 // ----------------------------------------------------------------------------
@@ -36,6 +35,7 @@ Dcl-DS baseRepoPath LikeDs(DSResult_T);
 Dcl-DS branchName LikeDs(DSResult_T);
 Dcl-S CmdStr  Varchar(256);
 
+Dcl-S lPointer Pointer;
 Dcl-S lAuthor Varchar(30);
 Dcl-S lEmail Varchar(50);
 
@@ -50,7 +50,13 @@ Dcl-S lFileName Varchar(21);
 
 Select;
   When (AUTHOR = '*JOB');
-    lAuthor = %Str(getenv('GIT_AUTHOR'));
+    lPointer = getenv('GIT_AUTHOR');
+    If (lPointer <> *NULL);
+      lAuthor = %Str(lPointer);
+    Else;
+      Utils_Print('ERROR: Cannot use AUTHOR(*JOB). GIT_AUTHOR not set.');
+      Return;
+    Endif;
   When (lAuthor = '*USER');
     lAuthor = %TrimR(USERNAME);
   Other;
@@ -59,8 +65,14 @@ Endsl;
 
 Select;
   When (lEmail = '*JOB');
-    // TODO: getenv
-    lAuthor = %Str(getenv('GIT_EMAIL'));
+    lPointer = getenv('GIT_EMAIL');
+    If (lPointer <> *NULL);
+      lEmail = %Str(lPointer);
+    Else;
+      Utils_Print('ERROR: Cannot use EMAIL(*JOB). GIT_EMAIL not set.');
+      Return;
+    Endif;
+    
   Other;
     lEmail = %Trim(EMAIL);
 Endsl;
