@@ -139,6 +139,17 @@ If (Error.Code = *BLANK);
             Endif;
 
             If (Success);
+              // Merge master back into branch incase any changes were missed.
+              Success = Utils_Qsh('cd ' + lRepoPath + ' && /QOpenSys/pkgs/bin/git merge ' + BASE_BRANCH);
+
+              If (Success = *Off);
+                printf('ERROR: Failed to merge ' + BASE_BRANCH + ' into ' + %Trim(branchName.Data) + '. Bringing conflict back to ' + %Trim(LIB));
+
+                Exsr BringFilesBack;
+              Endif;
+            Endif;
+
+            If (Success);
               // Check out to the base branch
               Success = Utils_Qsh('cd ' + lRepoPath + ' && /QOpenSys/pkgs/bin/git checkout ' + BASE_BRANCH);
               
@@ -179,10 +190,14 @@ If (Error.Code = *BLANK);
         Utils_Qsh('cd ' + lRepoPath + ' && /QOpenSys/pkgs/bin/git checkout ' + BASE_BRANCH);
 
         // TODO: unlock repo
-        // TODO: clear branch lib
         If (Success);
+          // CLear branch lib and delete the data area.
+          
           system('CHGLIB LIB(' + %Trim(LIB) + ') TEXT(''' + %Trim(branchName.Data) + ' (merged)'')');
           system('DLTOBJ OBJ(' + %Trim(LIB) + '/BRANCH) OBJTYPE(*DTAARA)');
+        Else;
+          // If it failed, delete the branch
+          Utils_Qsh('cd ' + lRepoPath + ' && /QOpenSys/pkgs/bin/git branch -D ' + %Trim(branchName.Data));
         Endif;
 
       Else;
@@ -202,3 +217,22 @@ Endif;
 system('RMVENVVAR ENVVAR(QIBM_QSH_CMD_OUTPUT)');
 
 Return;
+
+Begsr BringFilesBack;
+  Obj_List(LIB:'*ALL':'*FILE');
+  For lObjectCount = 1 to Obj_Count();
+    ObjectDs = Obj_Next();
+    ObjDscDs = Obj_Info(LIB:Object:ObjectType);
+
+    If (OBJATR = 'PF');
+      lDirName = %Trim(Utils_Lower(Object));
+
+      For lMemberCount = 1 to Mbrs_List(LIB:Object);
+        ListDS = Mbrs_Next();
+        lFileName = %Trim(Utils_Lower(LmMember)) + '.' + %Trim(Utils_Lower(LmType));
+
+        system('CPYFRMSTMF FROMSTMF(''./' + %Trim(lDirName) + '/' + %Trim(lFileName) + ''') TOMBR(''/QSYS.LIB/' + %Trim(LIB) + '.LIB/' + %Trim(Object) + '.FILE/' + %Trim(LmMember) + '.MBR'') MBROPT(*REPLACE)');
+      Endfor;
+    Endif;
+  Endfor;
+Endsr;
