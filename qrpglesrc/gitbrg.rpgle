@@ -1,13 +1,11 @@
 **FREE
 
-Ctl-Opt DFTACTGRP(*NO);
+Ctl-Opt DFTACTGRP(*NO) BNDDIR('GITCM');
 
 // -----------------------------------------------------------------------------
 
-Dcl-PR system Int(10) extproc('system');
-  *N Pointer value options(*string);
-End-PR;
-
+/copy 'qrpgleref/system.rpgle'
+/copy 'qrpgleref/utils.rpgle'
 /copy 'qrpgleref/dataarea.rpgle'
 
 // -----------------------------------------------------------------------------
@@ -24,15 +22,18 @@ Dcl-DS baseRepoPath LikeDs(DSResult_T);
 
 getDataArea(baseRepoPath:128:'GITREPODIR' + LIB:-1:128:Error);
 If (Error.Code = *BLANK);
+  DIR = Utils_Lower(DIR);
+  NAME = Utils_Lower(NAME);
+
   If (getSources(baseRepoPath.Data:DIR:NAME));
     // All good
   Else;
-    Dsply 'Error';
+    printf('ERROR: Could not get sources.');
     // Error!
   Endif;
 Else;
   Dsply 'No data area';
-  //showMessage('Unable to locate GITREPODIR in ' + %TrimR(BASE) + '.');
+  printf('ERROR: GITREPODIR data area not found.');
 Endif;
 
 Return;
@@ -109,7 +110,9 @@ Dcl-Proc getSources;
           // two cases we will ignore...
           if (%Len(Name) >= 1 AND %Len(Name) <= 10);
             if (%Subst(Name:1:1) <> '.');
-              if (lDir = '*ALL' OR Name = lDir);
+              if (lDir = '*all' OR Name = lDir);
+                system('CRTSRCPF FILE(' + %Trim(LIB) + '/' + Name + ') RCDLEN(112)');
+
                 success = getSources(
                                 %trim(lFolder + '/' + Name + '/'):
                                 Name:
@@ -120,7 +123,7 @@ Dcl-Proc getSources;
 
         When (st_objType = '*STMF');
           If (%Subst(Name:1:1) <> '.');
-            If (lName = '*ALL' OR %Subst(Name:1:%Len(lName)) = lName);
+            If (lName = '*all' OR %Subst(Name:1:%Len(lName)) = lName);
               index = %ScanR('.':Name);
               If (index > 0);
                 baseName = %Subst(Name:1:index - 1);
