@@ -1,0 +1,10 @@
+**FREE
+
+Dcl-C MAX_LINES    1000;
+Dcl-C GIT_LINE_LEN 128;
+
+Dcl-Pr GitDiffGetter IND ExtProc;
+  Path VARCHAR(128) CONST;
+  Parms VARCHAR(256) CONST;
+  oLines CHAR(GIT_LINE_LEN) DIM(MAX_LINES);
+End-Pr;
