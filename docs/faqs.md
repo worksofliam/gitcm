@@ -30,7 +30,7 @@ You can use `GITBRN` with `DIR(*ALL)` and `NAME(*ALL)`. This will copy all sourc
 
 ### Does this work with iForGit?
 
-Yes! If you already use iForGit over an existing repo/library on your IBM i, you can make use of the command (`GITLOG`) to browse the repository history.
+Yes! If you already use iForGit over an existing repo/library on your IBM i, you can make use of the command (`GITLOG`) to browse the repository history. iForGit has a different system for initialising and making commits, so you likely won't use that functionality right off the bat.
 
 ### How do I know if something passed or failed from the command line?
 
