@@ -1,6 +1,6 @@
 Gitcm combines two things:
 
-* The please of working with source members
+* The pleasure of working with source members
 * Git source control.
 
 **You should only use gitcm if you are not ready to make the full move to git.** Gitcm lets developers continue to maintain their source code in source members while keeping the true copy and history of changes in git.
