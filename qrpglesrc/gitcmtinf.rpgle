@@ -6,6 +6,12 @@ Ctl-Opt DFTACTGRP(*No) BNDDIR('GITCM/GITCM');
 /COPY 'qrpgleref/funkey.rpgle'
 /COPY 'qrpgleref/dataarea.rpgle'
 
+Dcl-PR GITDFFCMT ExtPgm;
+  LIB Char(10);
+  pCommit Char(7);
+  pFile   Char(128);
+End-Pr;
+
 // ---------------------------------------------------------------*
 
 Dcl-Pi GITCMTINF;
@@ -78,7 +84,7 @@ Begsr HandleInputs;
 
     Select;
       When (@1SEL = '5');
-        // DIFF(pCommit.Hash:gChangedFiles(Rrn).Path);
+        ShowDiff(gChangedFiles(Rrn).Path);
     Endsl;
 
     If (@1SEL <> *Blank);
@@ -90,6 +96,14 @@ Begsr HandleInputs;
 Endsr;
 
 // ------------------------------------------------------------
+
+Dcl-Proc ShowDiff;
+  Dcl-Pi *N;
+    FilePath Char(128) Value;
+  End-Pi;
+
+  GITDFFCMT(pLIB:pCommit.Hash:FilePath);
+End-Proc;
 
 Dcl-Proc ClearSubfile;
   SflDspCtl = *Off;
