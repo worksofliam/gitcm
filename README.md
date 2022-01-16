@@ -4,7 +4,7 @@ Let developers continue working out of libraries and source files while tracking
 
 * [Gitcm concepts](./docs/concepts.md) 📘
 * [Usage guide](./docs/guide.md) 🖥
-* [Installation guide](.docs/install.md) 🛠
+* [Installation guide](./docs/install.md) 🛠
 * [Frequently Asked Questions](.docs/faqs.md) 🗣
 
 ## ELI5: How does it work?
