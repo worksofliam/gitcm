@@ -34,9 +34,6 @@ Dcl-Proc GitDiffGetter Export;
 
   gGitLog.PathFile = '/tmp/' + %TrimR(gUser) + 'git.log';
 
-  // Program will assume CURDIR is git repo
-
-  // First we need to take the content of GIT LOG into a stream file
   lSuccess = Utils_Qsh('cd ' + %Trim(Path) + ' && '
       + '/QOpenSys/pkgs/bin/git --no-pager diff --no-color ' + %Trim(Parms) + ' '
       + x'4F' + ' iconv -f UTF-8 -t ISO8859-1 > ' + %TrimR(gGitLog.PathFile));
@@ -94,4 +91,122 @@ Dcl-Proc GitDiffGetter Export;
   Else;
     Return *Off;
   Endif;
+End-Proc;
+
+Dcl-Proc GitLogParse Export;
+  Dcl-Pi GitLogParse Ind;
+    Path Varchar(128) Const;
+    pFile Char(128) Const;
+    pLogEntry LikeDS(tLogEntry) Dim(MAX_COMMITS);
+  End-Pi;
+
+  Dcl-S gText   Varchar(128);
+  Dcl-S  gRecords Int(5) Inz(0);
+  Dcl-Ds gGitLog  LikeDS(File_Temp);
+  Dcl-S  gKey     Char(6);
+
+  Dcl-S gIsText Ind;
+
+  // ************************
+
+  Dcl-S gUser  Char(10) Inz(*User);
+  Dcl-S gFocus Varchar(128);
+
+  Clear pLogEntry;
+
+  gFocus = %Trim(pFile);
+  If (gFocus = '*ALL');
+    gFocus = '';
+  Elseif (gFocus <> '');
+    gFocus = ' -- ' + gFocus;
+  Endif;
+
+  gGitLog.PathFile = '/tmp/' + %TrimR(gUser) + 'git.log';
+
+  // Program will assume CURDIR is git repo
+
+  If (Utils_Qsh('cd ' + %Trim(Path) + ' && '
+      + '/QOpenSys/pkgs/bin/git --no-pager log -r ' + gFocus + ' '
+      + x'4F' + ' iconv -f UTF-8 -t ISO8859-1 > ' + %TrimR(gGitLog.PathFile))
+      = *Off);
+    // Failed to run git log
+    Return *Off;
+  Endif;
+
+  // Next we will want to read that stream file
+  gGitLog.PathFile = %TrimR(gGitLog.PathFile) + x'00';
+  gGitLog.OpenMode = 'r' + x'00';
+  gGitLog.FilePtr  = OpenFile(%addr(gGitLog.PathFile)
+                             :%addr(gGitLog.OpenMode));
+
+  If (gGitLog.FilePtr = *Null);
+    // Failed to open file
+    ptrToErrno = get_errno(); 
+    Return *Off;
+  ENDIF;
+
+  gIsText = *Off;
+  gRecords = 0;
+
+  Dow (ReadFile(%addr(gGitLog.RtvData)
+               :%Len(gGitLog.RtvData)
+               :gGitLog.FilePtr) <> *null);
+
+    If (%Subst(gGitLog.RtvData:1:1) = x'25');
+      gIsText = *On;
+      Iter;
+    ENDIF;
+
+    gGitLog.RtvData = %xlate(x'00':' ':gGitLog.RtvData);//End of record null
+    gGitLog.RtvData = %xlate(x'25':' ':gGitLog.RtvData);//Line feed (LF)
+    gGitLog.RtvData = %xlate(x'0D':' ':gGitLog.RtvData);//Carriage return (CR)
+    gGitLog.RtvData = %xlate(x'05':' ':gGitLog.RtvData);//Tab
+
+    gKey = %Subst(gGitLog.RtvData:1:6);
+
+    Select;
+      When (gKey = 'commit');
+        if (gIsText = *On);
+          // Last commit finished, write to file?
+          pLogEntry(gRecords).Text = gText;
+        ENDIF;
+
+        gText = '';
+        gIsText = *Off;
+        gRecords += 1;
+
+        If (gRecords > MAX_COMMITS);
+          Leave;
+        Endif;
+
+        pLogEntry(gRecords).Hash = %Subst(gGitLog.RtvData:8:7);
+
+      When (gKey = 'Author');
+        pLogEntry(gRecords).Author = %Subst(gGitLog.RtvData:9);
+
+      When (gKey = 'Date:');
+        pLogEntry(gRecords).Date = %Subst(gGitLog.RtvData:9);
+
+      When (gGitLog.RtvData = *Blank);
+        gIsText = *On;
+
+      Other;
+        If (gIsText);
+          gText += %Trim(gGitLog.RtvData) + ' ';
+        ENDIF;
+
+    ENDSL;
+
+    gGitLog.RtvData = '';
+  Enddo;
+
+
+  if (gIsText = *On);
+    // Last commit finished, write to file?
+    pLogEntry(gRecords).Text = gText;
+  ENDIF;
+
+  CloseFile(gGitLog.FilePtr);
+
+  Return gRecords > 0;
 End-Proc;
