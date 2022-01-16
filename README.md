@@ -3,7 +3,7 @@
 Let developers continue working out of libraries and source files while tracking changes in git.
 
 * [Gitcm concepts](./docs/concepts.md) 📘
-* [Usage guide](./docs/usage.md) 🖥
+* [Usage guide](./docs/guide.md) 🖥
 * [Installation guide](.docs/install.md) 🛠
 * [Frequently Asked Questions](.docs/faqs.md) 🗣
 
