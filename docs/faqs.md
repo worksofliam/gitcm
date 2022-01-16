@@ -28,6 +28,10 @@ Yes. You should know about the `GITLOG` command, where you pass in the base or b
 
 You can use `GITBRN` with `DIR(*ALL)` and `NAME(*ALL)`. This will copy all sources from the repository into the `LIB` parameter you specify - which can be the base.
 
+### Does this work with iForGit?
+
+Yes! If you already use iForGit over an existing repo/library on your IBM i, you can make use of the command (`GITLOG`) to browse the repository history.
+
 ### How do I know if something passed or failed from the command line?
 
 gitcm is very verbose. Every time you run a command, you should check the job log (`DSPJOBLOG`). Specifically look out for entries that start with `ERROR` and `NOTICE`.
