@@ -39,3 +39,11 @@ While developers write code, they can use `GITDFF` from the command line (even a
 From there, developers can finish up their branch by using the `GITCMTMRG` command. This allows developers to commit all their working changes to their branch and then automatically merge it into main (or master, however it was set up). If it turns out there is a source conflict when attempting to merge, the conflicts will be updated in the source members in the branch for the user to resolve them. When the user has resolved them, they can use `GITCMTMRG` again.
 
 There are also commands to view the git log (`GITLOG`), which lets you browse commits and view what files changed at a commit. As well as viewing the diff of a file at a certain point in time, devs can even create a new branch to roll a file back to that point. Developers have full control over their source when they have history.
+
+## What gitcm is not
+
+Perfect. Gitcm is not meant to be a way for developers to skip out on using git. We solely recommend you switch over to using git without depending on using source members. Limitiations:
+
+* Making many commits in a branch. You have to do one commit per branch library.
+* Comparing branches
+* Branching off of other branches

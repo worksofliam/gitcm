@@ -1,22 +1,40 @@
+### I no longer need my branch.
 
-### I've initialised the library. How can I start writing code?
+Just delete the branch library.
 
-Once you have initialised the library and setup the repo, you can now start writing code. You can create a branch for each feature, fix, etc, you work on. Branches generally are not supposed to contain more than one feature, fix, etc.
+### I need to restart my change in my branch. Can I undo it?
 
-1. Create a branch with `GITBRN`. This will create a new library with empty source files.
-    * `BASE` is the base library
-    * `LIB` is the new library for the branch (the branch library)
-    * `NAME` is the branch name that will be used in git.
-2. Inside of your new branch library, you will have empty source files.
-    * You can either use `GITBRG` (git bring) to bring source code in to this library, or
-    * you can create new members (or new source files!)
-3. After you are done working on your changes, you should always do a diff on the source
-    * This will let you see what changes have happened in the base before you commit and merge. This gives you a chance to bring in changes other people have done before you commit
-    * You can use `GITDFF` (git diff) on a source member in a branch library to see a diff in the green screen
-        * Protip: Create a PDM option for the diff: `GITCM/GITDFF LIB(&L) DIR(&F) NAME(&N) ATTR(&S)`
-4. When you're happen with your change, you can make a commit & merge
-    * You can use `GITCMTMRG` to make the commit & merge
-    * Making a commit means the change you made will be stored into the git log.
-    * Git requires a name and author when making a commit. You can supply this on the command or at a job level.
-    * When the commit has been made, the library text will be updated to say it has been merged.
-    * The library can be deleted when it is done with / been merged.
+Yes! You can just use `GITBRG` (git bring) to revert the source code back to what it is in the base repo.
+
+### How can I view the diff from `WRKMBRPDM`?
+
+You should create a PDM option for the diff: 
+
+```
+GITCM/GITDFF LIB(&L) DIR(&F) NAME(&N) ATTR(&S)
+```
+
+_Note: this only works when your member belongs to a branch library._
+
+### Can many people work on one branch
+
+Yes, many people can work in one branch, but only one person can make the commit. We recommend against this, and instead developers each make their own branches to work from.
+
+### Is there a way for me to view the source history? (Git log)
+
+Yes. You should know about the `GITLOG` command, where you pass in the base or branch library. This will show the last 50 commits in the repository. Following that, you can also view the files that changed at that commit, as well as diff of how that file changed.
+
+### How do I update the base library in case it is missing changes?
+
+You can use `GITBRN` with `DIR(*ALL)` and `NAME(*ALL)`. This will copy all sources from the repository into the `LIB` parameter you specify - which can be the base.
+
+### How do I know if something passed or failed from the command line?
+
+gitcm is very verbose. Every time you run a command, you should check the job log (`DSPJOBLOG`). Specifically look out for entries that start with `ERROR` and `NOTICE`.
+
+### Environment variables for author and emails
+
+In order for `GITCMTMRG` to know your email and author name, you need to setup two environment variables for your job.
+
+* `GIT_EMAIL` with your email address
+* `GIT_AUTHOR` with your choice name (and often username)
