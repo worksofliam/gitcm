@@ -1,4 +1,4 @@
-
+             /* GITCM/GITDFF LIB(&L) DIR(&F) NAME(&N) ATTR(&S) */
              CMD        Prompt('Git diff')
              
              PARM       KWD(LIB) TYPE(*CHAR) LEN(10) +

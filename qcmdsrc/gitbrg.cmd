@@ -1,6 +1,6 @@
 
 
-             CMD        Prompt('Git branch')
+             CMD        Prompt('Git bring')
              
              PARM       KWD(LIB) TYPE(*CHAR) LEN(10) +
                         PROMPT('Branch Library')
