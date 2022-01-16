@@ -91,11 +91,12 @@ If (Error.Code = *BLANK);
     If (system('CD DIR(''' + lRepoPath + ''')') = 0);
       // TODO: lock repo?
 
-      // checkout
+      // 1. Checkout to new branch
       Success = Utils_Qsh('cd ' + lRepoPath + ' && /QOpenSys/pkgs/bin/git checkout -b ' + %Trim(branchName.Data));
 
-      if (Success);
 
+      // 2. Copy over checked out source members
+      if (Success);
         // copy members
         Obj_List(LIB:'*ALL':'*FILE');
         For lObjectCount = 1 to Obj_Count();
@@ -136,11 +137,11 @@ If (Error.Code = *BLANK);
 
         If (Success = *On);
           Monitor;
-            // Stage all changes
+            // 3. Stage all changes
             Success = Utils_Qsh('cd ' + lRepoPath + ' && /QOpenSys/pkgs/bin/git add --all');
 
             If (Success);
-              // Do a commit
+              // 4. Do a commit
               Success = Utils_Qsh('cd ' + lRepoPath + ' && /QOpenSys/pkgs/bin/git commit -m "' + %Trim(TEXT) + '" --author "' + lAuthor + ' <' + lEmail + '>" ');
   
               If (Success = *Off);
@@ -149,28 +150,17 @@ If (Error.Code = *BLANK);
             Endif;
 
             If (Success);
-              // Merge master back into branch incase any changes were missed.
-              Success = Utils_Qsh('cd ' + lRepoPath + ' && /QOpenSys/pkgs/bin/git merge ' + BASE_BRANCH);
-
-              If (Success = *Off);
-                Utils_Print('ERROR: Failed to merge ' + BASE_BRANCH + ' into ' + %Trim(branchName.Data) + '. Bringing conflict back to ' + %Trim(LIB));
-
-                Exsr BringFilesBack;
-              Endif;
-            Endif;
-
-            If (Success);
-              // Check out to the base branch
+              // 5. Check out to the base branch
               Success = Utils_Qsh('cd ' + lRepoPath + ' && /QOpenSys/pkgs/bin/git checkout ' + BASE_BRANCH);
               
               If (Success = *Off);
-                Utils_Print('ERROR: Failed to checkout to branch ' + BASE_BRANCH + '. Does it already exist?');
+                Utils_Print('ERROR: Failed to checkout to branch ' + BASE_BRANCH + '.');
               Endif;
             Endif;
 
             If (Success);
               If (AUTOMERGE = '*YES');
-                // Merge the branch into the base branch
+                // 6. Merge the branch into the base branch
                 Success = Utils_Qsh('cd ' + lRepoPath + ' && /QOpenSys/pkgs/bin/git merge ' + %Trim(branchName.Data));
 
                 If (Success);
@@ -182,18 +172,20 @@ If (Error.Code = *BLANK);
                 Utils_Print('NOTICE: Created branch ' + %Trim(branchName.Data) + x'25');
               Endif;
             Endif;
+
           On-Error;
-            Utils_Qsh('cd ' + lRepoPath + ' && /QOpenSys/pkgs/bin/git clean -f');
             Utils_Print('ERROR: Failed to commit changes to the repository. Aborting');
           Endmon;
 
         Else;
-          // Undo all changes if there was an error and go back to base branch
-          Utils_Qsh('cd ' + lRepoPath + ' && /QOpenSys/pkgs/bin/git checkout -- .');
-        
-          // Check out to the base branch
-          Utils_Qsh('cd ' + lRepoPath + ' && /QOpenSys/pkgs/bin/git checkout ' + BASE_BRANCH);
+          // If it failed to copy the source members:
           Utils_Print('ERROR: Failed to migrate sources. Aborted.' + x'25');
+        Endif;
+
+        If (Success = *Off);
+          // Undo all changes if there was an error and go back to base branch
+          Utils_Qsh('cd ' + lRepoPath + ' && /QOpenSys/pkgs/bin/git clean -f');
+          Utils_Qsh('cd ' + lRepoPath + ' && /QOpenSys/pkgs/bin/git checkout -- .');
         Endif;
 
         // Always Check out to the base branch
