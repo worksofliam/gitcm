@@ -4,7 +4,7 @@ Ctl-Opt NoMain BNDDIR('GITCM/GITCM');
 
 // ************************
 
-/COPY 'qrpgleref/diff.rpgle'
+/COPY 'qrpgleref/git.rpgle'
 /COPY 'qrpgleref/ifs.rpgle'
 /COPY 'qrpgleref/utils.rpgle'
 

@@ -11,7 +11,7 @@ End-Pi;
 
 // ************************
 
-/COPY 'qrpgleref/diff.rpgle'
+/COPY 'qrpgleref/git.rpgle'
 /COPY 'qrpgleref/system.rpgle'
 /COPY 'qrpgleref/utils.rpgle'
 /COPY 'qrpgleref/funkey.rpgle'
