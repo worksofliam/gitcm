@@ -1,0 +1,52 @@
+     A                                      DSPSIZ(*DS4)
+     A                                      INDARA
+     A                                      CA06(06)
+     A                                      CA05(05)
+     A                                      CA03(03)
+     A          R SFLDTA                    SFL
+     A            RRN            4Y 0H
+     A* DISPLAY DTA
+     A            @1SEL          1A  B  7  3
+     A            @XCOMMIT       7A  O  7  6
+     A            @XUSER        25   O  7 17
+     A            @XDATE        25A  O  7 44
+     A            @XTEXT        50A  O  7 70
+     A* COLOR                  HELLO
+     A          R SFLCTL                    SFLCTL(SFLDTA)
+     A                                      SFLPAG(0016)
+     A                                      SFLSIZ(9999)
+     A                                      OVERLAY
+     A  85                                  SFLDSPCTL
+     A  95                                  SFLDSP
+     A N85                                  SFLCLR
+     A            SFLRRN         4S 0H      SFLRCDNBR(CURSOR)
+     A*
+     A                                  6  1'Sel'
+     A                                      DSPATR(HI)
+     A                                      DSPATR(UL)
+     A                                  6  6'Commit'
+     A                                      DSPATR(HI)
+     A                                      DSPATR(UL)
+     A                                  6 17'User'
+     A                                      DSPATR(UL)
+     A                                      COLOR(WHT)
+     A                                  6 44'Date'
+     A                                      DSPATR(HI)
+     A                                      DSPATR(UL)
+     A                                  6 70'Text'
+     A                                      DSPATR(HI)
+     A                                      DSPATR(UL)
+     A          R FOOTER_FMT
+     A                                      OVERLAY
+     A                                 26  3'F3=Exit'
+     A                                      COLOR(BLU)
+     A          R HEADER_FMT
+     A            SRC_MBR       10A  O  1  2
+     A                                  1115TIME
+     A                                  1124DATE
+     A                                      EDTCDE(Y)
+     A                                  1 58'Display Commits'
+     A                                      DSPATR(UL)
+     A                                      COLOR(WHT)
+     A                                  2 15'5=View'
+     A                                      COLOR(BLU)

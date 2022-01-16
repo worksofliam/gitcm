@@ -35,7 +35,8 @@ gitbrn.rpgle: gitcm.bnddir
 gitbrg.rpgle: gitcm.bnddir
 gitcmtmrg.rpgle: gitcm.bnddir
 gitdff.rpgle: gitcm.bnddir diffscrn.dspf
-gitlog.rpgle: gitcm.bnddir gitdsp.dspf
+gitlog.rpgle: gitcm.bnddir gitdsp.dspf gitcmtinf.rpgle
+gitcmtinf.rpgle: gitcm.bnddir commit.dspf
 
 %.rpgle: qrpglesrc/%.rpgle
 	liblist -a $(LIBLIST);\

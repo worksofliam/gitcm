@@ -1,0 +1,41 @@
+     A                                      DSPSIZ(*DS3)
+     A                                      INDARA
+     A                                      CA12(12)
+     A          R SFLDTA                    SFL
+     A            RRN            4Y 0H
+     A* DISPLAY DTA
+     A            @1SEL          1A  B 10  3
+     A            @XFILE        50A  O 10  6
+     A* COLOR
+     A          R SFLCTL                    SFLCTL(SFLDTA)
+     A                                      SFLPAG(0010)
+     A                                      SFLSIZ(9999)
+     A                                      OVERLAY
+     A  85                                  SFLDSPCTL
+     A  95                                  SFLDSP
+     A N85                                  SFLCLR
+     A            SFLRRN         4S 0H      SFLRCDNBR(CURSOR)
+     A*
+     A                                  9  1'Sel'
+     A                                      DSPATR(HI)
+     A                                      DSPATR(UL)
+     A                                  9  6'Path'
+     A                                      DSPATR(HI)
+     A                                      DSPATR(UL)
+     A          R FOOTER_FMT
+     A                                      OVERLAY
+     A                                 12  3'F12=Back'
+     A                                      COLOR(BLU)
+     A          R HEADER_FMT
+     A            SRC_MBR       10A  O  1  2
+     A                                  2 32'Changes at commit'
+     A                                      DSPATR(UL)
+     A                                      COLOR(WHT)
+     A                                  4  3'5=View difference'
+     A                                      COLOR(BLU)
+     A                                  6  1'Commit'
+     A                                      DSPATR(UL)
+     A                                      COLOR(WHT)
+     A            @XCOMMIT       7A  O  6  8
+     A            @XMSG         64A  O  6 16
+     A            @XDATE        64A  O  7  1
