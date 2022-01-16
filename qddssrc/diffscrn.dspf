@@ -1,0 +1,34 @@
+     A                                      DSPSIZ(*DS3)
+     A                                      INDARA
+     A                                      CA12(12)
+     A          R SFLDTA                    SFL
+     A            RRN            4Y 0H
+     A* DISPLAY DTA
+     A            @XLINE        74A  O  6  3DSPATR(&@XATTR)
+     A            @XATTR         1A  P
+     A* COLOR
+     A          R SFLCTL                    SFLCTL(SFLDTA)
+     A                                      SFLPAG(18)
+     A                                      SFLSIZ(9999)
+     A                                      OVERLAY
+     A  85                                  SFLDSPCTL
+     A  95                                  SFLDSP
+     A N85                                  SFLCLR
+     A            SFLRRN         4S 0H      SFLRCDNBR(CURSOR)
+     A*
+     A                                  5  3'Line'
+     A                                      DSPATR(HI)
+     A                                      DSPATR(UL)
+     A          R FOOTER_FMT
+     A                                      OVERLAY
+     A*                                12  3'F12=Back'
+     A*                                     COLOR(BLU)
+     A          R HEADER_FMT
+     A                                  2 34'Changes at commit'
+     A                                      DSPATR(UL)
+     A                                      COLOR(WHT)
+     A                                  3  3'Commit'
+     A                                      DSPATR(UL)
+     A                                      COLOR(WHT)
+     A            @XCOMMIT       7A  O  3 11
+     A            @XFILE        64A  O  3 20
