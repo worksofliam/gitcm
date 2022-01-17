@@ -139,8 +139,8 @@ Dcl-Proc LoadSubfile;
 
   ClearSubfile();
 
-  // @XCOMMIT = pCommit;
-  // @XFILE   = pFile;
+  @XCOMMIT = 'working';
+  @XFILE   = lDirName + '/' + lFileName + '.' + lFileAttr;
   GitDiffGetter(WorkingDirectory:Command:Lines);
 
   lCount = %Lookup('*EOF':Lines);
