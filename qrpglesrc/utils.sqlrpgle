@@ -21,7 +21,7 @@ Dcl-Proc Utils_Print Export;
   End-Pi;
 
   printf(%trim(Text) + x'25');
-  printf_jl(%trim(Text) + x'0d25');
+  printf_jl(%trim(Text) + x'25');
 End-Proc;
 
 Dcl-Proc Utils_Qsh Export;
