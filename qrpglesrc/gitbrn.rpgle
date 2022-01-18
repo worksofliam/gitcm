@@ -38,14 +38,14 @@ If (Error.Code = *BLANK);
       // Revert!
       system('CLRLIB ' + %TrimR(LIB));
       system('DLTLIB ' + %TrimR(LIB));
-      Utils_Print('ERROR: Error creating branch source files.');
+      Utils_Print('GITE004: Error creating branch source files.');
     Endif;
   Else;
-    Utils_Print('ERROR: Unable to create branch library ' + %TrimR(LIB) + '.');
+    Utils_Print('GITE003: Unable to create branch library ' + %TrimR(LIB) + '.');
   Endif;
 
 Else;
-  Utils_Print('ERROR: Unable to locate GITREPODIR in ' + %TrimR(BASE) + '.');
+  Utils_Print('GITE002: Unable to locate GITREPODIR in ' + %TrimR(BASE) + '.');
 Endif;
 
 Return;

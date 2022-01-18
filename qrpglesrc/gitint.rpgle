@@ -56,7 +56,7 @@ If (system('CD DIR(''' + lRepoPath + ''')') = 0);
             ListDS = Mbrs_Next();
             lFileName = %Trim(Utils_Lower(LmMember)) + '.' + %Trim(Utils_Lower(LmType));
 
-            Utils_Print('Copying ' + lDirName + '/' + lFileName + ' from ' + %Trim(LIB) + '/' + %Trim(Object) + '/' + %Trim(LmMember));
+            // Utils_Print('Copying ' + lDirName + '/' + lFileName + ' from ' + %Trim(LIB) + '/' + %Trim(Object) + '/' + %Trim(LmMember));
 
             CmdStr = 'CPYTOSTMF FROMMBR('''
                    + '/QSYS.lib/'
@@ -72,7 +72,7 @@ If (system('CD DIR(''' + lRepoPath + ''')') = 0);
               lMemberIndex = *HIVAL;
               lObjectIndex = *HIVAL;
 
-              Utils_Print('ERROR: Failed to copy ' + lDirName + '/' + lFileName);
+              Utils_Print('GITE006: Failed to copy ' + lDirName + '/' + lFileName);
             Endif;
           Endfor;
         Endif;
@@ -87,10 +87,10 @@ If (system('CD DIR(''' + lRepoPath + ''')') = 0);
           If (lSuccess);
             Utils_Print('NOTICE: Initial commit made.');
           Else;
-            Utils_Print('ERROR: Failed to commit to ' + lRepoPath);
+            Utils_Print('GITE013: Failed to commit to ' + lRepoPath);
           Endif;
         Else;
-          Utils_Print('ERROR: Failed to add files to repository.');
+          Utils_Print('GITE007: Failed to stage changes.');
         Endif;
       Endif;
     Endif;

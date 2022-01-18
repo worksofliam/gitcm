@@ -53,7 +53,7 @@ Select;
     If (lPointer <> *NULL);
       lAuthor = %Str(lPointer);
     Else;
-      Utils_Print('ERROR: Cannot use AUTHOR(*JOB). GIT_AUTHOR not set.');
+      Utils_Print('GITE005: Cannot use AUTHOR(*JOB). GIT_AUTHOR not set.');
       Return;
     Endif;
   When (lAuthor = '*USER');
@@ -68,7 +68,7 @@ Select;
     If (lPointer <> *NULL);
       lEmail = %Str(lPointer);
     Else;
-      Utils_Print('ERROR: Cannot use EMAIL(*JOB). GIT_EMAIL not set.');
+      Utils_Print('GITE005: Cannot use EMAIL(*JOB). GIT_EMAIL not set.');
       Return;
     Endif;
     
@@ -131,7 +131,7 @@ If (Error.Code = *BLANK);
                 lMemberCount = *HIVAL;
                 lObjectCount = *HIVAL;
 
-                Utils_Print('ERROR: Failed to copy ' + lDirName + '/' + lFileName + x'25');
+                Utils_Print('GITE006: Failed to copy ' + lDirName + '/' + lFileName + x'25');
               Endif;
             Endfor;
           Endif;
@@ -147,7 +147,7 @@ If (Error.Code = *BLANK);
               Success = Utils_Qsh('cd ' + lRepoPath + ' && /QOpenSys/pkgs/bin/git commit -m "' + %Trim(TEXT) + '" --author "' + lAuthor + ' <' + lEmail + '>" ');
   
               If (Success = *Off);
-                Utils_Print('ERROR: Failed to stage changes.');
+                Utils_Print('GITE007: Failed to stage changes.');
               Endif;
             Endif;
 
@@ -156,7 +156,7 @@ If (Error.Code = *BLANK);
               Success = Utils_Qsh('cd ' + lRepoPath + ' && /QOpenSys/pkgs/bin/git checkout ' + BASE_BRANCH);
               
               If (Success = *Off);
-                Utils_Print('ERROR: Failed to checkout to branch ' + BASE_BRANCH + '.');
+                Utils_Print('GITE008: Failed to checkout to branch ' + BASE_BRANCH + '.');
               Endif;
             Endif;
 
@@ -168,7 +168,7 @@ If (Error.Code = *BLANK);
                 If (Success);
                   Utils_Print('NOTICE: Merged ' + %Trim(branchName.Data) + ' into ' + BASE_BRANCH + x'25');
                 Else;
-                  Utils_Print('ERROR: Failed to merge ' + %Trim(branchName.Data) + ' into ' + BASE_BRANCH + x'25');
+                  Utils_Print('GITE009: Failed to merge ' + %Trim(branchName.Data) + ' into ' + BASE_BRANCH + x'25');
                 Endif;
               Else;
                 Utils_Print('NOTICE: Created branch ' + %Trim(branchName.Data) + x'25');
@@ -176,12 +176,12 @@ If (Error.Code = *BLANK);
             Endif;
 
           On-Error;
-            Utils_Print('ERROR: Failed to commit changes to the repository. Aborting');
+            Utils_Print('GITE010: Failed to commit changes to the repository. Aborting');
           Endmon;
 
         Else;
           // If it failed to copy the source members:
-          Utils_Print('ERROR: Failed to migrate sources. Aborted.' + x'25');
+          Utils_Print('GITE010: Failed to migrate sources. Aborted.' + x'25');
         Endif;
 
         If (Success = *Off);
@@ -209,16 +209,16 @@ If (Error.Code = *BLANK);
         Endif;
 
       Else;
-        Utils_Print('ERROR: Failed to checkout branch ' + %Trim(branchName.Data) + x'25');
+        Utils_Print('GITE011: Failed to checkout branch ' + %Trim(branchName.Data) + x'25');
       Endif;
     Else;
-      Utils_Print('ERROR: Unable to find git directory.' + x'25');
+      Utils_Print('GITE012: Unable to find git directory.' + x'25');
     Endif;
   Else;
-    Utils_Print('ERROR: Failed to get branch name. Missing BRANCH data area.' + x'25');
+    Utils_Print('GITE013: Failed to get branch name. Missing BRANCH data area.' + x'25');
   Endif;
 Else;
-  Utils_Print('ERROR: Failed to get base repo path. Missing GITREPODIR data area.' + x'25');
+  Utils_Print('GITE002: Failed to get base repo path. Missing GITREPODIR data area.' + x'25');
   // TODO: error handling
 Endif;
 

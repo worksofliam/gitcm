@@ -32,10 +32,10 @@ If (Error.Code = *BLANK);
   If (getSources(baseRepoPath.Data:DIR:NAME));
     // All good
   Else;
-    Utils_Print('ERROR: Could not get sources.');
+    Utils_Print('GITE001: Could not get sources.');
   Endif;
 Else;
-  Utils_Print('ERROR: GITREPODIR data area not found.');
+  Utils_Print('GITE002: GITREPODIR data area not found.');
 Endif;
 
 Return;

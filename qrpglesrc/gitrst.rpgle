@@ -58,26 +58,26 @@ If (Error.Code = *BLANK);
             system('CHGPFM FILE(' + %Trim(LIB) + '/' + %Trim(sourcefile) + ') MBR(' + %Trim(filename) + ') SRCTYPE(' + %Trim(extension) + ') TEXT(''Restored from commit ' + pCommit + ''')');
             Utils_Print('NOTICE: Restored ' + filePath + ' from commit ' + pCommit);
           Else;
-            Utils_Print('ERROR: Unable to copy streamfile (' + tempFile + ') to member.');
+            Utils_Print('GITE006: Unable to copy streamfile (' + tempFile + ') to member.');
           Endif;
         Else;
-          Utils_Print('ERROR: Unable to get file from commit');
+          Utils_Print('GITE014: Unable to get file from commit');
         Endif;
       Else;
-        Utils_Print('ERROR: No extension found in file path.');
+        Utils_Print('GITE015: No extension found in file path.');
       EndIf;
 
     else;
-      Utils_Print('ERROR: Path format incorrect. Cannot find directory.');
+      Utils_Print('GITE016: Path format incorrect. Cannot find directory.');
     Endif;
 
   Else;
-    Utils_Print('ERROR: Library provided (' + %Trim(LIB) + ') is not a branch library. You can only restore to a branch library.');
+    Utils_Print('GITE017: Library provided (' + %Trim(LIB) + ') is not a branch library. You can only restore to a branch library.');
   Endif;
 
 
 Else;
-  Utils_Print('Error: Unable to find GITREPODIR in ' + %Trim(LIB));
+  Utils_Print('GITE002: GITREPODIR data area not found in ' + %Trim(LIB));
 Endif;
 
 Return;
