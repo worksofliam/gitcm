@@ -62,7 +62,7 @@ If (Error.Code = *BLANK);
     Exfmt SFLCTL;
 
     Select;
-      When (Funkey = F03);
+      When (Funkey = F03 OR Funkey = F12);
         Exit = *On;
       WHEN (FunKey = F05);
         Refresh = *On;
