@@ -5,6 +5,7 @@ Ctl-Opt DFTACTGRP(*No) BNDDIR('GITCM/GITCM');
 // Commit info shows what files changed at a commit
 
 /COPY 'qrpgleref/git.rpgle'
+/COPY 'qrpgleref/system.rpgle'
 /COPY 'qrpgleref/funkey.rpgle'
 /COPY 'qrpgleref/dataarea.rpgle'
 
@@ -87,6 +88,11 @@ Begsr HandleInputs;
     Select;
       When (@1SEL = '5');
         ShowDiff(gChangedFiles(Rrn).Path);
+      When (@1SEL = 'R');
+        Monitor;
+          QCmdExc('?GITRST LIB(' + %trim(pLIB) + ') COMMIT(''' + %trim(pCommit.Hash) + ''') PATH(''' + %trim(gChangedFiles(Rrn).Path) + ''')':256);
+        On-Error;
+        Endmon;
     Endsl;
 
     If (@1SEL <> *Blank);

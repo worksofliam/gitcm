@@ -4,7 +4,7 @@ LIBRARY=GITCM
 LIBLIST=$(LIBRARY)
 SYSTEM_PARMS=-s
 
-all: gitcm.bnddir gitint.cmd gitbrn.cmd gitbrg.cmd gitcmtmrg.cmd gitdff.cmd gitlog.cmd
+all: gitcm.bnddir gitint.cmd gitbrn.cmd gitbrg.cmd gitcmtmrg.cmd gitdff.cmd gitlog.cmd gitrst.cmd
 
 gitcm.bnddir: utils.entry objects.entry object.entry members.entry git.entry
 
@@ -29,6 +29,7 @@ gitbrg.cmd: gitbrg.rpgle
 gitcmtmrg.cmd: gitcmtmrg.rpgle
 gitdff.cmd: gitdff.rpgle
 gitlog.cmd: gitlog.rpgle
+gitrst.cmd: gitrst.rpgle
 
 gitint.rpgle: gitcm.bnddir
 gitbrn.rpgle: gitcm.bnddir
@@ -36,8 +37,9 @@ gitbrg.rpgle: gitcm.bnddir
 gitcmtmrg.rpgle: gitcm.bnddir
 gitdff.rpgle: gitcm.bnddir diffscrn.dspf
 gitlog.rpgle: gitcm.bnddir gitdsp.dspf gitcmtinf.rpgle
-gitcmtinf.rpgle: gitcm.bnddir commit.dspf gitdffcmt.rpgle
-gitdffcmt.rpgle: diffscrn.dspf
+gitcmtinf.rpgle: gitcm.bnddir commit.dspf gitdffcmt.rpgle gitrst.cmd
+gitdffcmt.rpgle: gitcm.bnddir diffscrn.dspf
+gitrst.rpgle: gitcm.bnddir
 
 %.rpgle: qrpglesrc/%.rpgle
 	liblist -a $(LIBLIST);\
