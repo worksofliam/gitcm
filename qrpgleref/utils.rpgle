@@ -11,3 +11,6 @@ End-Pr;
 Dcl-Pr Utils_Qsh IND ExtProc;
   Command VARCHAR(512) CONST;
 End-Pr;
+
+Dcl-Pr Utils_JobType Char(1) ExtProc;
+End-Pr;
