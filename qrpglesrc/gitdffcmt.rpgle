@@ -2,6 +2,8 @@
 
 Ctl-Opt DFTACTGRP(*No) BNDDIR('GITCM/GITCM');
 
+// Used to show a diff of a file changes at a certain commit
+
 Dcl-Pi GITDFFCMT;
   LIB Char(10);
   pCommit Char(7);

@@ -2,6 +2,8 @@
 
 Ctl-Opt DFTACTGRP(*No) BNDDIR('GITCM/GITCM');
 
+// Git log for a repo
+
 /COPY 'qrpgleref/git.rpgle'
 /COPY 'qrpgleref/dataarea.rpgle'
 /COPY 'qrpgleref/funkey.rpgle'

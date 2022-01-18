@@ -2,6 +2,8 @@
 
 Ctl-Opt DFTACTGRP(*NO) BNDDIR('GITCM');
 
+// Git bring is used to bring content to a branch library from the IFS repo
+
 // -----------------------------------------------------------------------------
 
 /copy 'qrpgleref/system.rpgle'

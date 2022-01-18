@@ -2,6 +2,8 @@
 
 Ctl-Opt DFTACTGRP(*No) BNDDIR('GITCM/GITCM');
 
+// Commit info shows what files changed at a commit
+
 /COPY 'qrpgleref/git.rpgle'
 /COPY 'qrpgleref/funkey.rpgle'
 /COPY 'qrpgleref/dataarea.rpgle'

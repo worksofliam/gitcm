@@ -2,6 +2,8 @@
 
 Ctl-Opt DFTACTGRP(*No) BNDDIR('GITCM/GITCM');
 
+// Used to give a diff between the working source member and the repo head version
+
 Dcl-Pi GITDFF;
   LIB Char(10);
   DIR Char(10);

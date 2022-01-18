@@ -2,6 +2,8 @@
 
 Ctl-Opt DFTACTGRP(*NO) BNDDIR('GITCM');
 
+// Used to make a commit and merge from a branch library
+
 Dcl-Pi GITCMTMRG;
   LIB Char(10);
   TEXT Char(100);

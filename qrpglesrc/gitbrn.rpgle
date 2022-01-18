@@ -2,6 +2,8 @@
 
 Ctl-Opt DFTACTGRP(*NO) BNDDIR('GITCM/GITCM');
 
+// Git branch is used to create a library that is a branch from the repo
+
 // -----------------------------------------------------------------------------
 
 /copy 'qrpgleref/system.rpgle'

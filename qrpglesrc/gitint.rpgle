@@ -2,6 +2,8 @@
 
 Ctl-Opt DFTACTGRP(*NO) BNDDIR('GITCM');
 
+// Used to create a repo, push the source code to it and make a commit
+
 Dcl-Pi GITINT;
   REPOPATH Char(128);
   LIB Char(10);
