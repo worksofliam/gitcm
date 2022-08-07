@@ -125,22 +125,24 @@ Dcl-Proc getSources;
 
         When (st_objType = '*STMF');
           If (%Subst(Name:1:1) <> '.');
-            If (lName = '*all' OR %Subst(Name:1:%Len(lName)) = lName);
-              index = %ScanR('.':Name);
-              If (index > 0);
-                baseName = %Subst(Name:1:index - 1);
-                baseExt = %Subst(Name:index + 1);
-              Else;
-                baseName = Name;
-                baseExt = '';
-              Endif;
+            If (%Len(Name) >= %Len(lName));
+              If (lName = '*all' OR %Subst(Name:1:%Len(lName)) = lName);
+                index = %ScanR('.':Name);
+                If (index > 0);
+                  baseName = %Subst(Name:1:index - 1);
+                  baseExt = %Subst(Name:index + 1);
+                Else;
+                  baseName = Name;
+                  baseExt = '';
+                Endif;
 
-              If (system('CPYFRMSTMF FROMSTMF(''' + %Trim(lFolder) + %Trim(Name) + ''') TOMBR(''/QSYS.LIB/' + %Trim(LIB) + '.LIB/' + %Trim(lDir) + '.FILE/' + %Trim(baseName) + '.MBR'') MBROPT(*REPLACE)') <> 0);
-                success = *off;
-              Endif;
+                If (system('CPYFRMSTMF FROMSTMF(''' + %Trim(lFolder) + %Trim(Name) + ''') TOMBR(''/QSYS.LIB/' + %Trim(LIB) + '.LIB/' + %Trim(lDir) + '.FILE/' + %Trim(baseName) + '.MBR'') MBROPT(*REPLACE)') <> 0);
+                  success = *off;
+                Endif;
 
-              If (baseExt <> *BLANK);
-                system('CHGPFM FILE(' + %Trim(LIB) + '/' + %Trim(lDir) + ') MBR(' + %Trim(baseName) + ') SRCTYPE(' + %Trim(baseExt) + ')');
+                If (baseExt <> *BLANK);
+                  system('CHGPFM FILE(' + %Trim(LIB) + '/' + %Trim(lDir) + ') MBR(' + %Trim(baseName) + ') SRCTYPE(' + %Trim(baseExt) + ')');
+                Endif;
               Endif;
             Endif;
           Endif;
