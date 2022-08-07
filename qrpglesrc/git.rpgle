@@ -1,6 +1,6 @@
 **FREE
 
-Ctl-Opt NoMain BNDDIR('GITCM/GITCM');
+Ctl-Opt NoMain BNDDIR('GITCM');
 
 // ************************
 

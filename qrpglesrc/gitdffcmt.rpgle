@@ -1,6 +1,6 @@
 **FREE
 
-Ctl-Opt DFTACTGRP(*No) BNDDIR('GITCM/GITCM');
+Ctl-Opt DFTACTGRP(*No) BNDDIR('GITCM');
 
 // Used to show a diff of a file changes at a certain commit
 

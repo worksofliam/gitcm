@@ -1,6 +1,6 @@
 **FREE
 
-Ctl-Opt DFTACTGRP(*NO) BNDDIR('GITCM/GITCM');
+Ctl-Opt DFTACTGRP(*NO) BNDDIR('GITCM');
 
 // Git branch is used to create a library that is a branch from the repo
 

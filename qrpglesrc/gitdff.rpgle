@@ -1,6 +1,6 @@
 **FREE
 
-Ctl-Opt DFTACTGRP(*No) BNDDIR('GITCM/GITCM');
+Ctl-Opt DFTACTGRP(*No) BNDDIR('GITCM');
 
 // Used to give a diff between the working source member and the repo head version
 

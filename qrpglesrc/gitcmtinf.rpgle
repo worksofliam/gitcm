@@ -1,6 +1,6 @@
 **FREE
 
-Ctl-Opt DFTACTGRP(*No) BNDDIR('GITCM/GITCM');
+Ctl-Opt DFTACTGRP(*No) BNDDIR('GITCM');
 
 // Commit info shows what files changed at a commit
 

@@ -6,22 +6,17 @@ SYSTEM_PARMS=-s
 
 all: gitcm.bnddir gitint.cmd gitbrn.cmd gitbrg.cmd gitcmtmrg.cmd gitdff.cmd gitlog.cmd gitrst.cmd
 
-gitcm.bnddir: utils.entry objects.entry object.entry members.entry git.entry
+gitcm.bnddir: utils.srvpgm objects.srvpgm object.srvpgm members.srvpgm git.srvpgm
 
-utils.entry: utils.srvpgm
 utils.srvpgm: utils.sqlrpgmod
 
-object.entry: object.srvpgm
 object.srvpgm: object.rpgmod
 
-objects.entry: objects.srvpgm
 objects.srvpgm: objects.rpgmod
 
-members.entry: members.srvpgm
 members.srvpgm: members.rpgmod
 
-git.entry: git.srvpgm
-git.srvpgm: git.rpgmod
+git.srvpgm: git.rpgmod utils.srvpgm
 
 gitint.cmd: gitint.rpgle
 gitbrn.cmd: gitbrn.rpgle
@@ -42,6 +37,7 @@ gitdffcmt.rpgle: gitcm.bnddir diffscrn.dspf
 gitrst.rpgle: gitcm.bnddir
 
 %.rpgle: qrpglesrc/%.rpgle
+	system $(SYSTEM_PARMS) "CHGATR OBJ('$<') ATR(*CCSID) VALUE(1252)"
 	liblist -a $(LIBLIST);\
 	system $(SYSTEM_PARMS) "CRTBNDRPG PGM($(LIBRARY)/$*) SRCSTMF('$<') OPTION(*EVENTF) DBGVIEW(*SOURCE) TGTRLS(*CURRENT)"
 
@@ -72,7 +68,4 @@ gitrst.rpgle: gitcm.bnddir
 
 %.bnddir:
 	-system -q "CRTBNDDIR BNDDIR($(LIBRARY)/$*)"
-	-system -q "ADDBNDDIRE BNDDIR($(LIBRARY)/$*) OBJ($(patsubst %.entry,($(LIBRARY)/% *SRVPGM *IMMED),$^))"
-
-%.entry:
-	@echo "Entry: $*"
+	-system -q "ADDBNDDIRE BNDDIR($(LIBRARY)/$*) OBJ($(patsubst %.srvpgm,($(LIBRARY)/% *SRVPGM *IMMED),$^))"

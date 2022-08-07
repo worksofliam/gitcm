@@ -1,6 +1,6 @@
 **FREE
 
-Ctl-Opt DFTACTGRP(*No) BNDDIR('GITCM/GITCM');
+Ctl-Opt DFTACTGRP(*No) BNDDIR('GITCM');
 
 Dcl-Pi APIBRN;
   BASE Char(10);
