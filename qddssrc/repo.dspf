@@ -1,6 +1,7 @@
      A                                      INDARA
      A                                      CA02(02)
      A                                      CA07(07)
+     A                                      CA04(04)
      A                                      CA05(05)
      A                                      CA03(03)
      A                                      CA12(12)
@@ -30,13 +31,12 @@
      A                                      DSPATR(UL)
      A                                      COLOR(WHT)
      A          R HEADER_FMT
-     A                                  1 33'Work with Repo'
+     A                                  1  3'Work with Repo'
      A                                      DSPATR(UL)
      A                                      COLOR(WHT)
-     A                                  3  3'F2=New Branch F7=Update base +
-     A                                      F12=Cancel'
+     A                                  3  3'F2=New Branch F4=View log +
+     A                                      F7=Update base F12=Cancel'
      A                                      COLOR(BLU)
-     A                                  4  3'2=Edit 4=Delete 5=Log 7=Bring +
-     A                                      8=Merge'
+     A                                  4  3'2=Edit 4=Delete 7=Bring 8=Merge'
      A                                      COLOR(BLU)
-     A            @BASEPATH     46A  O  5  3
+     A            @BASEPATH     60A  O  1 20
