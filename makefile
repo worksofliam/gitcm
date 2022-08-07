@@ -4,7 +4,7 @@ LIBRARY=GITCM
 LIBLIST=$(LIBRARY)
 SYSTEM_PARMS=-s
 
-all: gitcm.bnddir gitint.cmd gitbrn.cmd gitbrg.cmd gitcmtmrg.cmd gitdff.cmd gitlog.cmd gitrst.cmd gitrpo.cmd apibrn.rpgle
+all: gitcm.bnddir gitint.cmd gitbrn.cmd gitbrg.cmd gitcmtmrg.cmd gitdff.cmd gitlog.cmd gitrst.cmd gitrpo.cmd apibrn.rpgle apipth.rpgle
 
 gitcm.bnddir: utils.srvpgm objects.srvpgm object.srvpgm members.srvpgm git.srvpgm
 utils.srvpgm: utils.sqlrpgmod
@@ -32,6 +32,8 @@ gitcmtinf.rpgle: gitcm.bnddir commit.dspf gitdffcmt.rpgle gitrst.cmd
 gitdffcmt.rpgle: gitcm.bnddir diffscrn.dspf
 gitrpo.rpgle: repo.dspf
 gitrst.rpgle: gitcm.bnddir
+apibrn.rpgle: gitcm.bnddir
+apipth.rpgle: gitcm.bnddir
 
 %.rpgle: qrpglesrc/%.rpgle
 	system $(SYSTEM_PARMS) "CHGATR OBJ('$<') ATR(*CCSID) VALUE(1252)"

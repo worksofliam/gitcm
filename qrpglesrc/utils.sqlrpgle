@@ -22,7 +22,11 @@ Dcl-Proc Utils_Print Export;
     Text Varchar(512) Const;
   End-Pi;
 
-  If (Utils_JobType() = 'I');
+  Dcl-s Type Char(1);
+
+  Type = Utils_JobType();
+
+  If (Type = 'I');
     printf_jl(%trim(Text) + x'25');
   Else;
     printf(%trim(Text) + x'25');
