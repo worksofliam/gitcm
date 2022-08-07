@@ -1,0 +1,11 @@
+[
+    {
+        "name": "Deploy and build current",
+        "command": "gmake LIBRARY=&CURLIB &BASENAME ERR=*EVENTF SYSTEM_PARMS=",
+        "deployFirst": true,
+        "environment": "pase",
+        "extensions": [
+            "GLOBAL"
+        ]
+    }
+]

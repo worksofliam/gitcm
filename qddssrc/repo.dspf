@@ -1,0 +1,42 @@
+     A                                      INDARA
+     A                                      CA02(02)
+     A                                      CA07(07)
+     A                                      CA05(05)
+     A                                      CA03(03)
+     A                                      CA12(12)
+     A          R SFLDTA                    SFL
+     A            RRN            4Y 0H
+     A* DISPLAY DTA
+     A            @1SEL          1A  B  7  7
+     A            @XLIB         10A  O  7 10
+     A            @XBRANCH      50A  O  7 22
+     A* COLOR                  HELLO
+     A          R SFLCTL                    SFLCTL(SFLDTA)
+     A                                      SFLPAG(0017)
+     A                                      SFLSIZ(9999)
+     A                                      OVERLAY
+     A  85                                  SFLDSPCTL
+     A  95                                  SFLDSP
+     A N85                                  SFLCLR
+     A            SFLRRN         4S 0H      SFLRCDNBR(CURSOR)
+     A*
+     A                                  6  6'Sel'
+     A                                      DSPATR(HI)
+     A                                      DSPATR(UL)
+     A                                  6 10'Library'
+     A                                      DSPATR(HI)
+     A                                      DSPATR(UL)
+     A                                  6 22'Branch'
+     A                                      DSPATR(UL)
+     A                                      COLOR(WHT)
+     A          R HEADER_FMT
+     A                                  1 33'Work with Repo'
+     A                                      DSPATR(UL)
+     A                                      COLOR(WHT)
+     A                                  3  3'F2=New Branch F7=Update base +
+     A                                      F12=Cancel'
+     A                                      COLOR(BLU)
+     A                                  4  3'2=Edit 4=Delete 5=Log 7=Bring +
+     A                                      8=Merge'
+     A                                      COLOR(BLU)
+     A            @BASEPATH     46A  O  5  3
