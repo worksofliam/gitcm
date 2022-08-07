@@ -4,7 +4,7 @@ LIBRARY=GITCM
 LIBLIST=$(LIBRARY)
 SYSTEM_PARMS=-s
 
-all: gitcm.bnddir gitint.cmd gitbrn.cmd gitbrg.cmd gitcmtmrg.cmd gitdff.cmd gitlog.cmd gitrst.cmd gitrpo.cmd
+all: gitcm.bnddir gitint.cmd gitbrn.cmd gitbrg.cmd gitcmtmrg.cmd gitdff.cmd gitlog.cmd gitrst.cmd gitrpo.cmd apibrn.rpgle
 
 gitcm.bnddir: utils.srvpgm objects.srvpgm object.srvpgm members.srvpgm git.srvpgm
 utils.srvpgm: utils.sqlrpgmod
