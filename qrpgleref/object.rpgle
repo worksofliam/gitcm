@@ -4,6 +4,11 @@
      D    pObject                    10A   Const
      D    pType                      10A   Const
 
+     D Obj_IsSourceFile...
+     D                 PR              N   
+     D    pLibrary                   10A   Const
+     D    pObject                    10A   Const
+
       **-- Object description structure OBJD0400:  ----------------------------**
      D ObjDscDs        Ds                  Inz
      D  ObjDscLen                    10i 0

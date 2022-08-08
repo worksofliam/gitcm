@@ -16,6 +16,27 @@
      d  RoObjTyp                     10a   Const
      d  RoError                   32767a         Options( *VarSize )
 
+     D RtvMbrD         PR                  ExtPgm('QUSRMBRD')
+     D   RcvVar                       1A
+     D   RcvVarLen                   10I 0 Const
+     D   Format                       8A   Const
+     D   QualDBF                     20A   Const
+     D   Member                      10A   Const
+     D   UseOvrDbf                    1A   Const
+     D   ErrorCode                    1A     
+     D dsSM            ds
+     D   dsSMBytRtn                  10I 0
+     D   dsSMBytAvl                  10I 0
+     D   dsSMFilNam                  10A
+     D   dsSMFilLib                  10A
+     D   dsSMFilMbr                  10A
+     D   dsSMFilAtr                  10A
+     D   dsSMSrcTyp                  10A
+     D   dsSMCrtDat                  13A
+     D   dsSMChgDat                  13A
+     D   dsSMText                    50A
+     D   dsSMSrcFil                   1A
+
       /COPY 'qrpgleref/object.rpgle'
 
      P Obj_Info        B                   Export
@@ -42,3 +63,23 @@
       /END-FREE
 
      P                 E
+
+       Dcl-Proc Obj_IsSourceFile Export;
+         Dcl-Pi Obj_IsSourceFile Ind;
+           pLibrary Char(10) Const;
+           pObject  Char(10) Const;
+         End-Pi;
+
+
+        RtvMbrD(
+          dsSM:
+          %Size(dsSm):
+          'MBRD0100':
+          pObject + pLibrary:
+          '*FIRST':
+          '0':
+          ApiError
+        );
+
+        Return DSSMSRCFIL = '1';
+       End-Proc;

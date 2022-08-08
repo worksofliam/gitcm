@@ -105,7 +105,7 @@ If (Error.Code = *BLANK);
           ObjectDs = Obj_Next();
           ObjDscDs = Obj_Info(LIB:Object:ObjectType);
 
-          If (OBJATR = 'PF');
+          If (OBJATR = 'PF' and Obj_IsSourceFile(LIB:Object));
             lDirName = %Trim(Utils_Lower(Object));
 
             // Attempt to create the directory incase it is new
@@ -239,7 +239,7 @@ Begsr BringFilesBack;
     ObjectDs = Obj_Next();
     ObjDscDs = Obj_Info(LIB:Object:ObjectType);
 
-    If (OBJATR = 'PF');
+    If (OBJATR = 'PF' AND Obj_IsSourceFile(LIB:Object));
       lDirName = %Trim(Utils_Lower(Object));
 
       lMemberTotal = Mbrs_List(LIB:Object);

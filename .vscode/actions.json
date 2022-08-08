@@ -7,5 +7,23 @@
         "extensions": [
             "GLOBAL"
         ]
+    },
+    {
+        "name": "Build service program",
+        "command": "gmake LIBRARY=&CURLIB &NAME.srvpgm ERR=*EVENTF SYSTEM_PARMS=",
+        "deployFirst": true,
+        "environment": "pase",
+        "extensions": [
+            "GLOBAL"
+        ]
+    },
+    {
+        "name": "Build all",
+        "command": "gmake LIBRARY=&CURLIB SYSTEM_PARMS=",
+        "deployFirst": true,
+        "environment": "pase",
+        "extensions": [
+            "GLOBAL"
+        ]
     }
 ]
