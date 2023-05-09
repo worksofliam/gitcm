@@ -113,7 +113,7 @@ If (Error.Code = *BLANK);
 
             lMemberTotal = Mbrs_List(LIB:Object);
             For lMemberCount = 1 to lMemberTotal;
-              ListDS = Mbrs_Next();
+              ListDS = Mbrs_Next(tttt:dddd);
               lFileName = %Trim(Utils_Lower(LmMember)) + '.' + %Trim(Utils_Lower(LmType));
 
               system('RMVLNK OBJLNK(''./' + lDirName + '/' + lFileName + ''')');
