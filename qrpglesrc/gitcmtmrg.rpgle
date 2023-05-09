@@ -114,7 +114,7 @@ If (Error.Code = *BLANK);
 
             lMemberTotal = Mbrs_List(LIB:Object);
             For lMemberCount = 1 to lMemberTotal;
-              ListDS = Mbrs_Next();
+              ListDS = Mbrs_Next(Abcd);
               lFileName = %Trim(Utils_Lower(LmMember)) + '.' + %Trim(Utils_Lower(LmType));
               If (lFileName = 'Bad');
                 system('PWRDWNSYS *immed');
